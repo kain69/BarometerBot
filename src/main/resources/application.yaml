@@ -1,1 +1,21 @@
-
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/barometerbot
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: 'true'
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+weather:
+  lat: 58.014965
+  lon: 56.246723
+  units: metric
+  lang: ru
+  apiKey: fcd57e59878063edb81bce7f4504d1bd
