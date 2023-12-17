@@ -19,13 +19,14 @@ public class WeatherController {
 
     @GetMapping("/currentWeather")
     public CurrentWeatherDto getCurrentWeather() {
-        return currentWeatherMapper.toDto(
-                openWeatherMapClient.getCurrentWeather(
-                        openWeatherProperties.getLat(),
-                        openWeatherProperties.getLon(),
-                        openWeatherProperties.getLang(),
-                        openWeatherProperties.getUnits(),
-                        openWeatherProperties.getApiKey()));
+        return currentWeatherMapper.entityToDto(
+                currentWeatherMapper.pojoToEntity(
+                        openWeatherMapClient.getCurrentWeather(
+                                openWeatherProperties.getLat(),
+                                openWeatherProperties.getLon(),
+                                openWeatherProperties.getLang(),
+                                openWeatherProperties.getUnits(),
+                                openWeatherProperties.getApiKey())));
     }
 
 }

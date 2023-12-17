@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "deg"
 })
 @Generated("jsonschema2pojo")
-public class Wind {
+public class WindPojo {
 
     @JsonProperty("speed")
     private Long speed;

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "humidity"
 })
 @Generated("jsonschema2pojo")
-public class Main {
+public class MainPojo {
 
     @JsonProperty("temp")
     private Double temp;
