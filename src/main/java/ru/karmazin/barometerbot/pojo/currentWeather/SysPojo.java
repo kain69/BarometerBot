@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "sunset"
 })
 @Generated("jsonschema2pojo")
-public class Sys {
+public class SysPojo {
 
     @JsonProperty("type")
     private Long type;

@@ -24,26 +24,26 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "cod"
 })
 @Generated("jsonschema2pojo")
-public class CurrentWeather {
+public class CurrentWeatherPojo {
 
     @JsonProperty("coord")
-    private Coord coord;
+    private CoordPojo coordPojo;
     @JsonProperty("weather")
-    private List<Weather> weather;
+    private List<WeatherPojo> weatherPojo;
     @JsonProperty("base")
     private String base;
     @JsonProperty("main")
-    private Main main;
+    private MainPojo mainPojo;
     @JsonProperty("visibility")
     private Long visibility;
     @JsonProperty("wind")
-    private Wind wind;
+    private WindPojo windPojo;
     @JsonProperty("clouds")
-    private Clouds clouds;
+    private CloudsPojo cloudsPojo;
     @JsonProperty("dt")
     private Long dt;
     @JsonProperty("sys")
-    private Sys sys;
+    private SysPojo sysPojo;
     @JsonProperty("timezone")
     private Long timezone;
     @JsonProperty("id")
@@ -54,23 +54,23 @@ public class CurrentWeather {
     private Long cod;
 
     @JsonProperty("coord")
-    public Coord getCoord() {
-        return coord;
+    public CoordPojo getCoord() {
+        return coordPojo;
     }
 
     @JsonProperty("coord")
-    public void setCoord(Coord coord) {
-        this.coord = coord;
+    public void setCoord(CoordPojo coordPojo) {
+        this.coordPojo = coordPojo;
     }
 
     @JsonProperty("weather")
-    public List<Weather> getWeather() {
-        return weather;
+    public List<WeatherPojo> getWeather() {
+        return weatherPojo;
     }
 
     @JsonProperty("weather")
-    public void setWeather(List<Weather> weather) {
-        this.weather = weather;
+    public void setWeather(List<WeatherPojo> weatherPojo) {
+        this.weatherPojo = weatherPojo;
     }
 
     @JsonProperty("base")
@@ -84,13 +84,13 @@ public class CurrentWeather {
     }
 
     @JsonProperty("main")
-    public Main getMain() {
-        return main;
+    public MainPojo getMain() {
+        return mainPojo;
     }
 
     @JsonProperty("main")
-    public void setMain(Main main) {
-        this.main = main;
+    public void setMain(MainPojo mainPojo) {
+        this.mainPojo = mainPojo;
     }
 
     @JsonProperty("visibility")
@@ -104,23 +104,23 @@ public class CurrentWeather {
     }
 
     @JsonProperty("wind")
-    public Wind getWind() {
-        return wind;
+    public WindPojo getWind() {
+        return windPojo;
     }
 
     @JsonProperty("wind")
-    public void setWind(Wind wind) {
-        this.wind = wind;
+    public void setWind(WindPojo windPojo) {
+        this.windPojo = windPojo;
     }
 
     @JsonProperty("clouds")
-    public Clouds getClouds() {
-        return clouds;
+    public CloudsPojo getClouds() {
+        return cloudsPojo;
     }
 
     @JsonProperty("clouds")
-    public void setClouds(Clouds clouds) {
-        this.clouds = clouds;
+    public void setClouds(CloudsPojo cloudsPojo) {
+        this.cloudsPojo = cloudsPojo;
     }
 
     @JsonProperty("dt")
@@ -134,13 +134,13 @@ public class CurrentWeather {
     }
 
     @JsonProperty("sys")
-    public Sys getSys() {
-        return sys;
+    public SysPojo getSys() {
+        return sysPojo;
     }
 
     @JsonProperty("sys")
-    public void setSys(Sys sys) {
-        this.sys = sys;
+    public void setSys(SysPojo sysPojo) {
+        this.sysPojo = sysPojo;
     }
 
     @JsonProperty("timezone")

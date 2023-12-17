@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "all"
 })
 @Generated("jsonschema2pojo")
-public class Clouds {
+public class CloudsPojo {
 
     @JsonProperty("all")
     private Long all;

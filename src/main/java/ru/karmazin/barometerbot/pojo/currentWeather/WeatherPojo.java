@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "icon"
 })
 @Generated("jsonschema2pojo")
-public class Weather {
+public class WeatherPojo {
 
     @JsonProperty("id")
     private Long id;
