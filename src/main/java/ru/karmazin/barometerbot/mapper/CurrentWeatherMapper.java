@@ -35,7 +35,7 @@ public class CurrentWeatherMapper {
     public CurrentWeatherEntity pojoToEntity(CurrentWeatherPojo model) {
         return CurrentWeatherEntity.builder()
                 .date(dateMapper.unixToLocalDateTime(model.getDt()).toLocalDate())
-                .time(dateMapper.unixToLocalDateTime(model.getDt()).toLocalTime())
+                .timeWeather(dateMapper.unixToLocalDateTime(model.getDt()).toLocalTime())
                 .weather(weatherPojoToEntity(model.getWeather().getFirst()))
                 .temp(model.getMain().getTemp())
                 .feelsLike(model.getMain().getFeelsLike())
@@ -49,7 +49,7 @@ public class CurrentWeatherMapper {
 
     public CurrentWeatherDto entityToDto(CurrentWeatherEntity model) {
         return CurrentWeatherDto.builder()
-                .dt(LocalDateTime.of(model.getDate(), model.getTime()))
+                .dt(LocalDateTime.of(model.getDate(), model.getTimeWeather()))
                 .weather(weatherEntityToDto(model.getWeather()))
                 .temp(model.getTemp())
                 .feelsLike(model.getFeelsLike())

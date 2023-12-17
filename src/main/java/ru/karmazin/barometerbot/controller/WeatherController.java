@@ -22,15 +22,13 @@ public class WeatherController {
     private final CurrentWeatherService currentWeatherService;
 
     @GetMapping("/weather")
-    public ResponseEntity<CurrentWeatherDto> getCurrentWeather(@RequestParam("date") LocalDate date) {
-        Optional<CurrentWeatherDto> currentWeatherDto = currentWeatherService.getWeather(LocalDateTime.of(date, LocalTime.now()));
-        if(currentWeatherDto.isPresent())
-            return ResponseEntity.ok(currentWeatherDto.get());
-        else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-    @GetMapping("/weather")
-    public ResponseEntity<CurrentWeatherDto> getCurrentWeather() {
-        Optional<CurrentWeatherDto> currentWeatherDto = currentWeatherService.getCurrentWeather();
+    public ResponseEntity<CurrentWeatherDto> getCurrentWeather(@RequestParam(value = "date", required = false) LocalDate date) {
+        Optional<CurrentWeatherDto> currentWeatherDto;
+        if (date == null) {
+            currentWeatherDto = currentWeatherService.getCurrentWeather();
+        } else {
+            currentWeatherDto = currentWeatherService.getWeather(LocalDateTime.of(date, LocalTime.now()));
+        }
         if(currentWeatherDto.isPresent())
             return ResponseEntity.ok(currentWeatherDto.get());
         else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
