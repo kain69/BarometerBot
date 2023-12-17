@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "CurrentWeather")
+@Table(name = "Current_Weather")
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,28 +27,28 @@ import java.time.LocalTime;
 public class CurrentWeatherEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CurrentWeather_id")
+    @Column(name = "Current_Weather_id")
     private Long id;
-    @Column(name = "CurrentWeather_date")
+    @Column(name = "Current_Weather_date")
     private LocalDate date;
-    @Column(name = "CurrentWeather_time")
+    @Column(name = "Current_Weather_time")
     private LocalTime time;
+    //todo: Время добавления в бд отдельно сделать и всю логику со временем на него привязать.
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Weather_id", referencedColumnName = "Weather_id")
     private WeatherEntity weather;
-    @Column(name = "CurrentWeather_temp")
+    @Column(name = "Current_Weather_temp")
     private Double temp;
-    @Column(name = "CurrentWeather_feelsLike")
+    @Column(name = "Current_Weather_Feels_Like")
     private Double feelsLike;
-    @Column(name = "CurrentWeather_pressure")
+    @Column(name = "Current_Weather_pressure")
     private Long pressure;
-    @Column(name = "CurrentWeather_humidity")
+    @Column(name = "Current_Weather_humidity")
     private Long humidity;
-    @Column(name = "CurrentWeather_clouds")
+    @Column(name = "Current_Weather_clouds")
     private Long clouds;
-    @Column(name = "CurrentWeather_sunrise")
+    @Column(name = "Current_Weather_sunrise")
     private LocalDateTime sunrise;
-    @Column(name = "CurrentWeather_sunset")
+    @Column(name = "Current_Weather_sunset")
     private LocalDateTime sunset;
-
 }

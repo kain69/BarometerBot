@@ -1,6 +1,7 @@
 package ru.karmazin.barometerbot.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.karmazin.barometerbot.client.OpenWeatherMapClient;
@@ -17,14 +18,17 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CurrentWeatherService {
     private final CurrentWeatherRepository currentWeatherRepository;
+    private final CurrentWeatherMapper currentWeatherMapper;
+    private final WeatherService weatherService;
     private final OpenWeatherMapClient openWeatherMapClient;
     private final OpenWeatherProperties openWeatherProperties;
-    private final CurrentWeatherMapper currentWeatherMapper;
 
     @Scheduled(cron = "0 0 * * * *")
     private void getAndSaveFromOpenWeatherMap() {
+        log.info("Запуск получения погоды по расписанию");
         saveCurrentWeather();
     }
 
@@ -37,21 +41,29 @@ public class CurrentWeatherService {
                         .withSecond(LocalTime.MAX.getSecond())
                         .withNano(LocalTime.MAX.getNano())
         );
-        return currentWeather.orElseGet(() ->
-                currentWeatherRepository.save(
-                        currentWeatherMapper.pojoToEntity(
-                                openWeatherMapClient.getCurrentWeather(
-                                        openWeatherProperties.getLat(),
-                                        openWeatherProperties.getLon(),
-                                        openWeatherProperties.getLang(),
-                                        openWeatherProperties.getUnits(),
-                                        openWeatherProperties.getApiKey())))
-        );
+        if (currentWeather.isPresent()) {
+            log.info("Погоды за этот час уже записана");
+            return currentWeather.get();
+        } else {
+            log.info("Погода за этот час еще не получена");
+            CurrentWeatherEntity currentWeatherEntity = currentWeatherMapper.pojoToEntity(
+                    openWeatherMapClient.getCurrentWeather(
+                            openWeatherProperties.getLat(),
+                            openWeatherProperties.getLon(),
+                            openWeatherProperties.getLang(),
+                            openWeatherProperties.getUnits(),
+                            openWeatherProperties.getApiKey()));
+            weatherService.createIfNotExists(currentWeatherEntity.getWeather());
+            log.info("Создание записи с текущей погодой в бд");
+            return currentWeatherRepository.save(currentWeatherEntity);
+        }
     }
 
     public Optional<CurrentWeatherDto> getWeather(LocalDateTime dateTime) {
         Optional<CurrentWeatherEntity> currentWeather = currentWeatherRepository.findByDateAndTimeHour(
                 dateTime.toLocalDate(), dateTime.toLocalTime().getHour());
+        if(currentWeather.isEmpty())
+            currentWeather = currentWeatherRepository.findFirstByDateOrderByTimeDesc(dateTime.toLocalDate());
         return currentWeather.map(currentWeatherMapper::entityToDto);
     }
 
