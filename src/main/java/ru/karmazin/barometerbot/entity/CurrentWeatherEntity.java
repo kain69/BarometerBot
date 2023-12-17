@@ -15,6 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -45,5 +46,9 @@ public class CurrentWeatherEntity {
     private Long humidity;
     @Column(name = "CurrentWeather_clouds")
     private Long clouds;
+    @Column(name = "CurrentWeather_sunrise")
+    private LocalDateTime sunrise;
+    @Column(name = "CurrentWeather_sunset")
+    private LocalDateTime sunset;
 
 }
