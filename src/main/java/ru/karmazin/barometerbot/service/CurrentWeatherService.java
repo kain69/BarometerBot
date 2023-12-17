@@ -26,14 +26,14 @@ public class CurrentWeatherService {
     private final OpenWeatherMapClient openWeatherMapClient;
     private final OpenWeatherProperties openWeatherProperties;
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 0 * * * *") // Каждый час
     private void getAndSaveFromOpenWeatherMap() {
         log.info("Запуск получения погоды по расписанию");
         saveCurrentWeather();
     }
 
     public CurrentWeatherEntity saveCurrentWeather() {
-        Optional<CurrentWeatherEntity> currentWeather = currentWeatherRepository.findByDateAndTimeBetween(
+        Optional<CurrentWeatherEntity> currentWeather = currentWeatherRepository.findByDateAndTimeInsertBetween(
                 LocalDate.now(),
                 LocalTime.now().withMinute(0).withSecond(0).withNano(0),
                 LocalTime.now()
@@ -53,6 +53,7 @@ public class CurrentWeatherService {
                             openWeatherProperties.getLang(),
                             openWeatherProperties.getUnits(),
                             openWeatherProperties.getApiKey()));
+            currentWeatherEntity.setTimeInsert(LocalTime.now());
             weatherService.createIfNotExists(currentWeatherEntity.getWeather());
             log.info("Создание записи с текущей погодой в бд");
             return currentWeatherRepository.save(currentWeatherEntity);
@@ -63,7 +64,7 @@ public class CurrentWeatherService {
         Optional<CurrentWeatherEntity> currentWeather = currentWeatherRepository.findByDateAndTimeHour(
                 dateTime.toLocalDate(), dateTime.toLocalTime().getHour());
         if(currentWeather.isEmpty())
-            currentWeather = currentWeatherRepository.findFirstByDateOrderByTimeDesc(dateTime.toLocalDate());
+            currentWeather = currentWeatherRepository.findFirstByDateOrderByTimeInsertDesc(dateTime.toLocalDate());
         return currentWeather.map(currentWeatherMapper::entityToDto);
     }
 
