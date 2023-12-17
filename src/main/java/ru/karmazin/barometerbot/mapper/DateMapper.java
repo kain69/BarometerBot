@@ -8,7 +8,8 @@ import java.time.ZoneOffset;
 
 @Component
 public class DateMapper {
+    private static final ZoneOffset UTC5 = ZoneOffset.ofHours(5); // UTC+5
     public LocalDateTime unixToLocalDateTime(long unix) {
-        return LocalDateTime.ofInstant(Instant.ofEpochSecond(unix), ZoneOffset.UTC);
+        return LocalDateTime.ofInstant(Instant.ofEpochSecond(unix), UTC5);
     }
 }
