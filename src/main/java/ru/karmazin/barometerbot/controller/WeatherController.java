@@ -1,32 +1,38 @@
 package ru.karmazin.barometerbot.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.karmazin.barometerbot.client.OpenWeatherMapClient;
-import ru.karmazin.barometerbot.configuration.OpenWeatherProperties;
 import ru.karmazin.barometerbot.dto.currentWeather.CurrentWeatherDto;
-import ru.karmazin.barometerbot.mapper.CurrentWeatherMapper;
+import ru.karmazin.barometerbot.service.CurrentWeatherService;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/weather")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class WeatherController {
-    private final OpenWeatherMapClient openWeatherMapClient;
-    private final OpenWeatherProperties openWeatherProperties;
-    private final CurrentWeatherMapper currentWeatherMapper;
+    private final CurrentWeatherService currentWeatherService;
 
-    @GetMapping("/currentWeather")
-    public CurrentWeatherDto getCurrentWeather() {
-        return currentWeatherMapper.entityToDto(
-                currentWeatherMapper.pojoToEntity(
-                        openWeatherMapClient.getCurrentWeather(
-                                openWeatherProperties.getLat(),
-                                openWeatherProperties.getLon(),
-                                openWeatherProperties.getLang(),
-                                openWeatherProperties.getUnits(),
-                                openWeatherProperties.getApiKey())));
+    @GetMapping("/weather")
+    public ResponseEntity<CurrentWeatherDto> getCurrentWeather(@RequestParam("date") LocalDate date) {
+        Optional<CurrentWeatherDto> currentWeatherDto = currentWeatherService.getWeather(LocalDateTime.of(date, LocalTime.now()));
+        if(currentWeatherDto.isPresent())
+            return ResponseEntity.ok(currentWeatherDto.get());
+        else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-
+    @GetMapping("/weather")
+    public ResponseEntity<CurrentWeatherDto> getCurrentWeather() {
+        Optional<CurrentWeatherDto> currentWeatherDto = currentWeatherService.getCurrentWeather();
+        if(currentWeatherDto.isPresent())
+            return ResponseEntity.ok(currentWeatherDto.get());
+        else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
