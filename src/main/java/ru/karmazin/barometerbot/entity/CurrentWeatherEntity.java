@@ -31,9 +31,10 @@ public class CurrentWeatherEntity {
     private Long id;
     @Column(name = "Current_Weather_date")
     private LocalDate date;
-    @Column(name = "Current_Weather_time")
-    private LocalTime time;
-    //todo: Время добавления в бд отдельно сделать и всю логику со временем на него привязать.
+    @Column(name = "Current_Weather_time_insert")
+    private LocalTime timeInsert;
+    @Column(name = "Current_Weather_time_weather")
+    private LocalTime timeWeather;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Weather_id", referencedColumnName = "Weather_id")
     private WeatherEntity weather;
