@@ -42,6 +42,8 @@ public class CurrentWeatherMapper {
                 .pressure(Math.round(model.getMain().getPressure() * PRESSURECOEF))
                 .humidity(model.getMain().getHumidity())
                 .clouds(model.getClouds().getAll())
+                .sunrise(dateMapper.unixToLocalDateTime(model.getSys().getSunrise()))
+                .sunset(dateMapper.unixToLocalDateTime(model.getSys().getSunset()))
                 .build();
     }
 
